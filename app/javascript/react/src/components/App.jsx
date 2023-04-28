@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
+import LoginModule from './LoginModule';
 
 function App() {
 
@@ -12,6 +13,7 @@ const root = ReactDOM.createRoot(document.getElementById('app'));
 root.render(
   <React.StrictMode>
     <App />
+    <LoginModule />
   </React.StrictMode>
 );
 
