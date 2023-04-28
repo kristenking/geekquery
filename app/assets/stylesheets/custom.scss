@@ -1,0 +1,38 @@
+html {
+    height: 100vh;
+  }
+  
+  body {
+    background-color: #544b4b;
+    height: 100%;
+  }
+  
+  
+  .home-sections {
+    height: 100%;
+    width: 80%;
+  }
+  
+  .images-section, .login-section  {
+    height: 95%;
+    width: 45%;
+    background-position-x: right;
+  }
+  
+  
+  .card-img-top {
+    max-width: 50%;
+    align-self: center;
+  }
+  
+  .line-text{
+    padding: 0 .5rem; /* creates the space */
+    font-size: small;
+    margin: 0;
+  }
+  
+  .line{
+    flex: 1;
+    height: 1px;
+    background-color: rgb(139, 137, 137);
+  }
