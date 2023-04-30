@@ -1,0 +1,23 @@
+<div id="<%= dom_id question %>">
+  <p>
+    <strong>Title:</strong>
+    <%= question.title %>
+  </p>
+
+  <p>
+    <strong>Tag:</strong>
+    <%= question.tag %>
+  </p>
+
+  <p>
+    <strong>User:</strong>
+    <%= question.user_id %>
+  </p>
+
+  <p>
+    <strong>Images:</strong>
+    <%= question.images.each do |image| %>
+      <div><%= image_tag image %></div>
+    <% end %>
+
+</div>
