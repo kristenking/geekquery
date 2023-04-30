@@ -1,12 +1,12 @@
 <div class="container home-sections d-flex flex-row justify-content-center align-items-center">
 
     <div class="login-section pt-3">
-        <div class="card text-center pt-5" style="width: 23rem;">
+        <div class="card text-center pt-5 mx-auto" style="width: 23rem;">
             <%= image_tag 'logo.png', class: "card-img-top" %>
             <div class="card-body">
                 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
                     <div class="mb-3 mt-4">
-                        <%= f.email_field :email, class: "form-control", placeholder: "Username or email" %>
+                        <%= f.email_field :email, class: "form-control", placeholder: "Email" %>
                     </div>
                     <div class="mb-3">
                         <%= f.password_field :password, class: "form-control", placeholder: "Password" %>
@@ -29,13 +29,15 @@
                     </p>
                 <% end %>
 
-                <a href="#" class="fs-6 d-block my-4 text-decoration-none"> Forgot password?</a>
+                <a href="#" class="fs-6 d-block my-4 text-decoration-none text-info"> Forgot password?</a>
+
             </div>
         </div>
-        <div class="card text-center py-2 mt-3" style="width: 23rem;">
+
+        <div class="card text-center py-2 mt-3 mx-auto" style="width: 23rem;">
             <div class="card-text">
                 Don't have an account?
-                <a href="#" class="fs-6 my-4 text-decoration-none"> Sign up</a>
+                <%= link_to  "Sign up", new_user_registration_path, class: "fs-6  my-4 text-decoration-none text-info" %>
             </div>
         </div>
     </div>
