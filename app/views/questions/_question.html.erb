@@ -1,25 +1,51 @@
 <div id="<%= dom_id question %>">
-  <p>
-    <strong>Title:</strong>
-    <%= question.title %>
-  </p>
 
-  <p>
-    <strong>Tag:</strong>
-    <%= question.tag %>
-  </p>
-
-  <p>
-    <strong>User:</strong>
-    <%= question.user_id %>
-  </p>
-
-  <p>
-    <strong>Images:</strong>
-    <%= question.images.each do |image| %>
-      <div><%= image_tag image %></div>
+<div class="card" style="width: 70rem; margin: 1rem">
+  <div class="card-header bg-white d-flex align-items-center"> 
+    <% if question.user.profile_picture.attached? %>
+      <%= image_tag question.user.profile_picture, class: "img-thumbnail rounded-circle", style: "width: 3%" %>
+    <% else %>
+      <%= image_tag "profile_pic.jpg", class: "img-thumbnail rounded-circle", style: "width: 3%" %>
     <% end %>
+    <div style= "margin: 10px;">
+    <%= question.user.username %>
+    </div>
+    
+    <div class="ms-auto align-self-center"> 
+      <div class="dropdown">
+        <a class="text-dark fs-4" style="text-decoration:none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          ...
+        </a>
 
+        <ul class="dropdown-menu">
+          <li><%= button_to 'Delete post', question, method: :delete, class:"dropdown-item" %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card-body">
+    <img src="..." class="card-img-top" alt="">
+    <h3 class="card-title"><%= question.title %></h3>
+    <p class="card-text">
+      <span class='badge bg-danger'><%= question.tag %></span>
+    </p>
+   
+    <div class="card-text">
+      <% question.images.each do |image| %>
+        <%= image_tag image, class: 'img-thumbnail' %>
+      <% end %>
+    </div>
+      <small class="text-muted"><%= time_ago_in_words(question.created_at) %></small>
+   
+  </div>
+
+ 
+
+  <div class="card-footer d-flex justify-content-between bg-white">
+    <input type="text" class="w-75" placeholder="Add your answer..." style="border:none"/>
+    <a class="text-warning fw-bold" style="text-decoration:none">Answer</a>
+    </div>
 </div>
-
-
+</div>
