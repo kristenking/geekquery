@@ -1,13 +1,16 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import LoginModule from './LoginModule';
+import QuestionCard from './QuestionCard';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
-
   return (
-    <div className="custome-class">
-    {/* <LoginModule /> */}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/questions" element={<QuestionCard />} />
+      </Routes>
+    </Router>
   );
 }
 

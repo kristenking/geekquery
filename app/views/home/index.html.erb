@@ -1,5 +1,7 @@
+<div id="app"></div>
+
 <h1>This is the home page</h1>
-<%# <div id="app"></div> %>
+
 <% if current_user %>
   <%= button_to 'Sign out', destroy_user_session_path, method: :delete %>
 <% end %>  
