@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white ">
+  <div class="container-fluid">
+    <%= link_to root_path, class:"navbar-brand" do %>
+       <%= image_tag 'logo.png' %>
+    <% end %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div class="d-flex mx-auto" style="width: 70%;">
+  <form class="d-flex w-100">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="border-color: #ffe1a6; border-width: 2px; width: 80%;">
+    <button class="btn btn-outline-dark me-5" type="submit">Search</button>
+  </form>
+</div>
+
+  
+    </div>
+    <div>
+<%= link_to new_question_path, class: 'btn btn-warning text-white font-weight-bold', style: 'font-size: 0.8rem; padding: 5px 10px; margin: 10px; white-space: nowrap;' do %>
+  <button class='btn btn-warning text-white font-weight-bold' style='margin: 0; white-space: nowrap; border: none; background: none;'>
+    <i class="bi bi-plus-circle" style="font-size: 1rem;"></i> Ask Question
+  </button>
+<% end %>
+    </div>
+    <% if current_user && current_user.profile_picture.attached? %>
+      <%= image_tag current_user.profile_picture, class: "img-thumbnail rounded-circle me-3", style: "width: 3%; margin: 1rem;" %>
+    <% else %>
+      <%= image_tag "profile_pic.jpg", class: "img-thumbnail rounded-circle me-3", style: "width: 5%" %>
+    <% end %>
+  </div>
+</nav>
