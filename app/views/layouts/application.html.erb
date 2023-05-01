@@ -11,7 +11,9 @@
   </head>
 
   <body>
+  <% if current_user%>
     <%= render 'layouts/navbar'%>
+  <% end %>  
     <div id="app"></div>
     <%= yield %>
   </body>
