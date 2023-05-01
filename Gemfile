@@ -44,6 +44,7 @@ gem "font-awesome-rails"
 gem "font-awesome-sass", "~> 6.4.0"
 gem "bootsnap", require: false
 gem "devise"
+gem 'activestorage-validator'
 
 gem "react-rails"
 
