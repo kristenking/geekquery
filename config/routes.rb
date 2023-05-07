@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   get '/questions', to:'home#index', via: :all
   # Defines the root path route ("/")
   # root "articles#index"
+
+  question "toggle_like", to: "likes#toggle_like", as: :toggle_like
 end
