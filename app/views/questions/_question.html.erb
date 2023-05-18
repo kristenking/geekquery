@@ -38,6 +38,8 @@
         <%= image_tag image, class: 'img-thumbnail' %>
       <% end %>
     </div>
+    <%= render "questions/question_actions", question: question %>
+  
       <small class="text-muted"><%= time_ago_in_words(question.created_at) %></small>
    
   </div>

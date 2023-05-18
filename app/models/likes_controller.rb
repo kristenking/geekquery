@@ -1,10 +1,10 @@
 class LikesController < ApplicationController
     before_action :set_question
     def toggle_like
-        if(@like = @question.likes_find_by(user: current_user))
+        if(@like = @question.likes.find_by(user: current_user))
             @like.destroy
         else
-            @question.likes_create(user: current_user)
+            @question.likes.create(user: current_user)
         end
     end
 
