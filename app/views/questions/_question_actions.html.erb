@@ -1,7 +1,9 @@
-<div class="d-flex justify-content-start align-items-center gap-1 mt-2">
-  <%= button_to toggle_like_path(question_id: question.id), method: :post, style: "border:none; background:none" do %>
-<i class="<%= question.likes.find_by(user: current_user) ? "bi bi-heart-fill" : "bi bi-heart" %>" 
-   style="<%= question.likes.find_by(user: current_user) ? "color: #ffa903;" : "" %>"></i>
-  <% end %>
-</div>
-<small class="fw-bold"><%= pluralize(question.likes.count, "like") %> </small><br>
+<%= turbo_frame_tag "question#{question.id}actions" do %>
+    <div class="d-flex justify-content-start align-items-center gap-1 mt-2">
+        <%= button_to toggle_like_path(question_id: question.id), method: :post, style: "border:none; background:none" do %>
+            <i class="<%= question.likes.find_by(user: current_user) ? "bi bi-heart-fill" : "bi bi-heart" %>" 
+      style="<%= question.likes.find_by(user: current_user) ? "color: #ffa903;" : "" %>"></i>
+        <% end %>
+    </div>
+    <small class="fw-bold"><%= pluralize(question.likes.count, "like") %> </small><br>
+<% end %>
