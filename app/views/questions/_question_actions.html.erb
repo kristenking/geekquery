@@ -5,5 +5,26 @@
       style="<%= question.likes.find_by(user: current_user) ? "color: #ffa903;" : "" %>"></i>
         <% end %>
     </div>
+      <a href="#" data-bs-toggle="modal" data-bs-target="#question<%= question.id %>_likesModal" style="text-decoration:none" class="text-dark">
     <small class="fw-bold"><%= pluralize(question.likes.count, "like") %> </small><br>
+    </a>
+
+    <!-- Modal -->
+  <div class="modal fade" id="question<%= question.id %>_likesModal" tabindex="-1" aria-labelledby="post<%= question.id %>_likesModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="question<%= question.id %>_likesModalLabel">Question Likes</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex flex-column gap-3" >
+            <% question.likers.each do |liker| %>
+              <%= render "questions/liker", liker: liker %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>
