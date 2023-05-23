@@ -16,6 +16,8 @@ class LikesController < ApplicationController
                 locals: {question: @question}
               )
             end
+            format.html { redirect_to @question }
+            format.json { render json: @question }
         end
     end
 
