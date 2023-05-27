@@ -48,9 +48,14 @@
 
  
 
-  <div class="card-footer d-flex justify-content-between bg-white">
-    <input type="text" class="w-75" placeholder="Add your answer..." style="border:none"/>
-    <a class="text-warning fw-bold" style="text-decoration:none">Answer</a>
-    </div>
+  
+   <%= form_with url: comments_path, method: :post do |f| %>
+    <div class="card-footer d-flex justify-content-between bg-white">
+      <%= f.text_area :comment_body, class: "W-75", placeholder: "Add your comment...", style:"border:none" %>
+      <%= f.hidden_field :question_id, value: question.id %>
+      <%= f.submit "Comment", class: "btn btn-warning fw-bold", style: "background:none:border:none" %>
+      </div>
+    <% end %>
+   
 </div>
 </div>
