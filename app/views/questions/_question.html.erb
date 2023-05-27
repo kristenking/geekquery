@@ -39,6 +39,8 @@
       <% end %>
     </div>
     <%= render "questions/question_actions", question: question %>
+
+    <%= render "questions/question_comments", question: question %>
   
       <small class="text-muted"><%= time_ago_in_words(question.created_at) %></small>
    
