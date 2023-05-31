@@ -1,16 +1,21 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import LoginModule from './LoginModule';
-import QuestionCard from './QuestionCard';
+// import QuestionCard from './QuestionCard';
+import QuestionList from './QuestionList';
+import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 
 function App() {
   return (
+    <ChakraProvider>
     <Router>
       <Routes>
-        <Route path="/questions" element={<QuestionCard />} />
+        <Route path="/questions" element={<QuestionList />} />
       </Routes>
     </Router>
+    </ChakraProvider>
   );
 }
 
