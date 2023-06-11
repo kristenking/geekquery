@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Heading, Badge, Stack } from '@chakra-ui/react';
+import { Box, Heading, Badge, Stack, Flex, IconButton } from '@chakra-ui/react';
+import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
+
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
@@ -12,7 +14,20 @@ const Questions = () => {
   const fetchQuestions = async () => {
     try {
       const response = await axios.get('http://localhost:3000/api/v1/questions');
-      setQuestions(response.data);
+      const updatedQuestions = response.data.map((question) => ({
+        ...question,
+        liked_by_user: question.likes.some((like) => like.user_id === 2),
+      }));
+      setQuestions(updatedQuestions);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleToggleLike = async (questionId) => {
+    try {
+      await axios.post(`http://localhost:3000/api/v1/questions/${questionId}/toggle_like`);
+      fetchQuestions();
     } catch (error) {
       console.error(error);
     }
@@ -33,6 +48,17 @@ const Questions = () => {
           >
             <Heading as="h3" mb={2} fontSize="xl">{question.title}</Heading>
             <Badge colorScheme="red">{question.tag}</Badge>
+            <Flex align="center" mt={2}>
+              <IconButton
+                icon={question.liked_by_user ? <IoMdHeart /> : <IoMdHeartEmpty />}
+                onClick={() => handleToggleLike(question.id)}
+                aria-label="Toggle Like"
+                colorScheme={question.liked_by_user ? 'red' : 'gray'}
+                size="sm"
+                mr={2}
+              />
+              <span>{question.likes.length}</span>
+            </Flex>
           </Box>
         ))}
       </Stack>
