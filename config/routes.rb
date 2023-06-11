@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  #  Ruby on Rails routes
+  # Ruby on Rails routes
   resources :questions
   devise_for :users
   root 'home#index'
@@ -7,7 +7,10 @@ Rails.application.routes.draw do
   # API routes
   namespace :api do
     namespace :v1 do
-      resources :questions, only: [:index, :show, :create, :update, :destroy]
+      resources :questions, only: [:index, :show, :create, :update, :destroy] do
+        post :toggle_like, on: :member
+      end
+      resource :users, only: [:show]
     end
   end
 
