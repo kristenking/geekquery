@@ -3,20 +3,40 @@ import axios from 'axios';
 import { Box, Heading, Badge, Stack, Flex, IconButton } from '@chakra-ui/react';
 import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
 
-
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    fetchQuestions();
+    const fetchData = async () => {
+      await fetchCurrentUser();
+    };
+
+    fetchData();
   }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      fetchQuestions();
+    }
+  }, [currentUser]);
+
+  const fetchCurrentUser = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/api/v1/users');
+      console.log(response.data);
+      setCurrentUser(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const fetchQuestions = async () => {
     try {
       const response = await axios.get('http://localhost:3000/api/v1/questions');
       const updatedQuestions = response.data.map((question) => ({
         ...question,
-        liked_by_user: question.likes.some((like) => like.user_id === 2),
+        liked_by_user: question.likes.some((like) => like.user_id === currentUser.id),
       }));
       setQuestions(updatedQuestions);
     } catch (error) {

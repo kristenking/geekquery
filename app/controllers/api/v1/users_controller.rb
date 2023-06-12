@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
 
   def show
     if current_user
-      render json: current_user, status: :ok
+      render json: { id: current_user.id, username: current_user.username, email: current_user.email }, status: :ok
     else
       render json: { error: "No user logged in" }, status: :unauthorized
     end
