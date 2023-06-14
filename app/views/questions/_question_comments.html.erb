@@ -2,7 +2,8 @@
    <% if question.comments.count > 0 %>
    <small class="text-muted">View all <%= pluralize(question.comments.count, "comments") %> </small>
    <% end %>
-   <% question.comments.each do |comment| %>
+   <% question.comments.last(5).each do |comment| %>
       <p class="card-text m-0"><span class="fw-bold"><%= comment.user.username %></span> <%= comment.body %></p>
    <% end %>
 <% end %>
+
