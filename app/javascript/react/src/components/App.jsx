@@ -1,21 +1,38 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import LoginModule from './LoginModule';
-// import QuestionCard from './QuestionCard';
 import QuestionList from './QuestionList';
 import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import UserContext from './UserContext';
+import { useEffect, useState } from 'react';
 
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/v1/users')
+      .then(response => response.json())
+      .then(data => setUser(data))
+      .catch(error => console.error(error))
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <ChakraProvider>
-    <Router>
-      <Routes>
-        <Route path="/questions" element={<QuestionList />} />
-      </Routes>
-    </Router>
-    </ChakraProvider>
+    <UserContext.Provider value={user}>
+      <ChakraProvider>
+        <Router>
+          <Routes>
+            <Route path="/questions" element={<QuestionList />} />
+          </Routes>
+        </Router>
+      </ChakraProvider>
+    </UserContext.Provider>
   );
 }
 
