@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :questions, only: [:index, :show, :create, :update, :destroy] do
         post :toggle_like, on: :member
+        resources :comments, only: [:index, :create, :destroy]
       end
       resource :users, only: [:show]
     end
