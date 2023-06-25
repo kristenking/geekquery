@@ -24,6 +24,12 @@ class QuestionsController < ApplicationController
   def create
     @question = current_user.questions.new(question_params)
 
+    if @question.save
+      redirect_to questions_path
+    else
+      render :new
+    end
+
     # respond_to do |format|
     #   if @question.save
     #     format.html { redirect_to question_url(@question), notice: "Question was successfully created." }
