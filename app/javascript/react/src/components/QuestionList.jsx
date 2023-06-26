@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { Box, Heading, Badge, Stack, Flex, IconButton, Text, Input, Button } from '@chakra-ui/react';
+import { Box, Heading, Badge, Stack, Flex, IconButton, Text, Input, Button, Image } from '@chakra-ui/react';
 import { IoMdHeart, IoMdHeartEmpty, IoMdClose } from 'react-icons/io';
 import UserContext from './UserContext';
 
@@ -95,6 +95,21 @@ const QuestionList = () => {
           >
             <Heading as="h3" mb={2} fontSize="xl">{question.title}</Heading>
             <Badge colorScheme="red">{question.tag}</Badge>
+            {question.image_urls && question.image_urls.map((url, index) => (
+              <Flex justifyContent="center" alignItems="center" h="100%" w="100%">
+                <Image
+                  key={index}
+                  src={url}
+                  alt="Question related"
+                  w="auto"
+                  h="auto"
+                  borderRadius={5}
+                  objectFit="contain"
+                  m={0}
+                />
+              </Flex>
+
+            ))}
             <Flex align="center" mt={2}>
               <IconButton
                 icon={question.liked_by_user ? <IoMdHeart /> : <IoMdHeartEmpty />}

@@ -4,21 +4,21 @@ class Api::V1::QuestionsController < ApplicationController
 
   def index
     @questions = Question.includes(:likes).all
-    render json: @questions.to_json(include: :likes), status: :ok
+    render json: @questions.to_json(include: :likes, methods: :image_urls), status: :ok
   end
 
   def show
     @question = Question.find(params[:id])
-    render json: @question, status: :ok
+    render json: @question.as_json(include: :likes, methods: :image_urls), status: :ok
   end
 
   def create
     @question = current_user.questions.new(question_params)
 
     if @question.save
-      render json: { data: @question, status: 'success' }, status: :ok
+      render json: @question, status: :created
     else
-      render json: { data: @question.errors.full_messages, status: 'failure' }, status: :unprocessable_entity
+      render json: { errors: @question.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -26,16 +26,16 @@ class Api::V1::QuestionsController < ApplicationController
     @question = Question.find(params[:id])
 
     if @question.update(question_params)
-      render json: { data: @question, status: 'success' }, status: :ok
+      render json: @question, status: :ok
     else
-      render json: { data: @question.errors.full_messages, status: 'failure' }, status: :unprocessable_entity
+      render json: { errors: @question.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def destroy
     @question = Question.find(params[:id])
     @question.destroy
-    render json: { status: 'success' }, status: :ok
+    render head: :no_content
   end
 
   def toggle_like
