@@ -1,21 +1,24 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { Box, Heading, Badge, Stack, Flex, IconButton, Text, Input, Button } from '@chakra-ui/react';
-import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
+import { IoMdHeart, IoMdHeartEmpty, IoMdClose } from 'react-icons/io';
 import UserContext from './UserContext';
 
 const QuestionList = () => {
+
   const [questions, setQuestions] = useState([]);
   const [comments, setComments] = useState({});
   const [newComments, setNewComments] = useState({});
   const [expandedComments, setExpandedComments] = useState({});
   const user = useContext(UserContext);
 
+
   useEffect(() => {
     if (user) {
       fetchQuestions();
     }
   }, [user]);
+
 
   const fetchQuestions = async () => {
     try {
@@ -31,6 +34,7 @@ const QuestionList = () => {
     }
   };
 
+
   const fetchComments = async (questionId) => {
     try {
       const response = await axios.get(`http://localhost:3000/api/v1/questions/${questionId}/comments`);
@@ -40,6 +44,7 @@ const QuestionList = () => {
     }
   };
 
+
   const handleToggleLike = async (questionId) => {
     try {
       await axios.post(`http://localhost:3000/api/v1/questions/${questionId}/toggle_like`);
@@ -48,6 +53,7 @@ const QuestionList = () => {
       console.error(error);
     }
   };
+
 
   const handleAddComment = async (questionId) => {
     try {
@@ -59,9 +65,20 @@ const QuestionList = () => {
     }
   };
 
+  const handleDeleteComment = async (questionId, commentId) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/v1/questions/${questionId}/comments/${commentId}`);
+      fetchComments(questionId);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
   const handleToggleExpandComments = (questionId) => {
     setExpandedComments(prevExpanded => ({ ...prevExpanded, [questionId]: !prevExpanded[questionId] }));
-  }
+  };
+
 
   return (
     <Box maxWidth="600px" mx="auto" py={8}>
@@ -92,8 +109,18 @@ const QuestionList = () => {
             <Text mt={2}>Comments:</Text>
             <Stack spacing={2}>
               {(comments[question.id] || []).slice(0, expandedComments[question.id] ? undefined : 3).map(comment => (
-                <Box key={comment.id} bg="gray.100" p={2} borderRadius="md">
-                  <Text fontSize="sm"> {comment.username} : {comment.body}</Text>
+                <Box key={comment.id} bg="gray.100" p={2} borderRadius="md" position="relative">
+                  <Flex align="center" justify="space-between">
+                    <Text fontSize="sm">{comment.username}: {comment.body}</Text>
+                    {user && comment.user_id === user.id && (
+                      <IconButton
+                        icon={<IoMdClose />}
+                        onClick={() => handleDeleteComment(question.id, comment.id)}
+                        colorScheme="red"
+                        size="sm"
+                      />
+                    )}
+                  </Flex>
                 </Box>
               ))}
               {
