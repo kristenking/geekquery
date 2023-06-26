@@ -96,9 +96,8 @@ const QuestionList = () => {
             <Heading as="h3" mb={2} fontSize="xl">{question.title}</Heading>
             <Badge colorScheme="red">{question.tag}</Badge>
             {question.image_urls && question.image_urls.map((url, index) => (
-              <Flex justifyContent="center" alignItems="center" h="100%" w="100%">
+              <Flex justifyContent="center" alignItems="center" h="100%" w="100%" key={index}>
                 <Image
-                  key={index}
                   src={url}
                   alt="Question related"
                   w="auto"
