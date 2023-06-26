@@ -4,10 +4,11 @@ import { Box, Heading, Badge, Stack, Flex, IconButton, Text, Input, Button } fro
 import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
 import UserContext from './UserContext';
 
-const Questions = () => {
+const QuestionList = () => {
   const [questions, setQuestions] = useState([]);
   const [comments, setComments] = useState({});
   const [newComments, setNewComments] = useState({});
+  const [expandedComments, setExpandedComments] = useState({});
   const user = useContext(UserContext);
 
   useEffect(() => {
@@ -48,8 +49,6 @@ const Questions = () => {
     }
   };
 
-
-
   const handleAddComment = async (questionId) => {
     try {
       await axios.post(`http://localhost:3000/api/v1/questions/${questionId}/comments`, { comment_body: newComments[questionId] });
@@ -60,7 +59,9 @@ const Questions = () => {
     }
   };
 
-
+  const handleToggleExpandComments = (questionId) => {
+    setExpandedComments(prevExpanded => ({ ...prevExpanded, [questionId]: !prevExpanded[questionId] }));
+  }
 
   return (
     <Box maxWidth="600px" mx="auto" py={8}>
@@ -90,11 +91,17 @@ const Questions = () => {
             </Flex>
             <Text mt={2}>Comments:</Text>
             <Stack spacing={2}>
-              {(comments[question.id] || []).map(comment => (
+              {(comments[question.id] || []).slice(0, expandedComments[question.id] ? undefined : 3).map(comment => (
                 <Box key={comment.id} bg="gray.100" p={2} borderRadius="md">
                   <Text fontSize="sm"> {comment.username} : {comment.body}</Text>
                 </Box>
               ))}
+              {
+                comments[question.id] && comments[question.id].length > 3 &&
+                <Button onClick={() => handleToggleExpandComments(question.id)}>
+                  {expandedComments[question.id] ? 'Show Less' : 'Show More'}
+                </Button>
+              }
               <Input
                 value={newComments[question.id] || ''}
                 onChange={(e) => setNewComments(prevComments => ({ ...prevComments, [question.id]: e.target.value }))}
@@ -109,4 +116,4 @@ const Questions = () => {
   );
 };
 
-export default Questions;
+export default QuestionList;
