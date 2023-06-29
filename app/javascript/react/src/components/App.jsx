@@ -5,6 +5,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import UserContext from './UserContext';
 import { useEffect, useState } from 'react';
+import ProfilePage from './ProfilePage';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/questions" element={<QuestionList />} />
+            <Route path="/" element={<ProfilePage />} />
           </Routes>
         </Router>
       </ChakraProvider>
