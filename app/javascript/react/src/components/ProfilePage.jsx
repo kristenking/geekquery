@@ -1,7 +1,33 @@
-import React from 'react';
-import { Box, Flex, Image, Heading, Text } from '@chakra-ui/react';
+import React, { useContext, useState } from 'react';
+import { Box, Flex, Image, Heading, Text, Input, Button } from '@chakra-ui/react';
+import axios from 'axios';
+import UserContext from './UserContext';
 
 const ProfilePage = () => {
+    const user = useContext(UserContext);
+    const [profileImage, setProfileImage] = useState(user.avatar);
+
+    const handleImageUpload = async (event) => {
+        const selectedUploadFile = event.target.files[0];
+        const avatarUploadData = new FormData();
+        avatarUploadData.append('user[avatar]', selectedUploadFile);
+
+        try {
+            const response = await axios.put('http://localhost:3000/api/v1/users', avatarUploadData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            if (response.status === 200) {
+                setProfileImage(response.data.avatar);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    //temporarily hardcoded data
     const myQuestions = [
         {
             id: 1,
@@ -31,17 +57,37 @@ const ProfilePage = () => {
     return (
         <Box maxWidth="1200px" py={8}>
             <Flex>
-                <Image src="profile_pic.jpg" alt="profile pic" boxSize="200px" objectFit="cover" borderRadius="md" ml={8} />
+                <Box align="center">
+                    <Image src={profileImage} alt="profile pic" boxSize="200px" objectFit="cover" borderRadius="md" ml={3} />
+                    <Button as="label" bg="#FFC108" color="white" size="sm" htmlFor="avatar">
+                        Upload Image
+                        <input id="avatar" type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
+                    </Button>
+                </Box>
 
                 <Flex width="calc(100% - 220px)" justify="space-between">
                     <Box width="45%" maxHeight="600px" overflowY="auto">
-                        <Heading as="h2" fontSize="2xl" mb={4}>My Questions</Heading>
+                        <Heading as="h2" fontSize="2xl" mb={4}>
+                            My Questions
+                        </Heading>
                         {myQuestions.map((question) => (
-                            <Box key={question.id} borderWidth="1px" borderRadius="md" p={2} boxShadow="md" mb={4} height="100px">
-                                <Heading as="h3" fontSize="lg" mb={1} noOfLines={1}>{question.title}</Heading>
+                            <Box
+                                key={question.id}
+                                borderWidth="1px"
+                                borderRadius="md"
+                                p={2}
+                                boxShadow="md"
+                                mb={4}
+                                height="100px"
+                            >
+                                <Heading as="h3" fontSize="lg" mb={1} noOfLines={1}>
+                                    {question.title}
+                                </Heading>
                                 <Flex wrap="wrap">
                                     {question.tags.map((tag) => (
-                                        <Text key={tag} mr={2} fontSize="sm" color="gray.500">#{tag}</Text>
+                                        <Text key={tag} mr={2} fontSize="sm" color="gray.500">
+                                            #{tag}
+                                        </Text>
                                     ))}
                                 </Flex>
                             </Box>
@@ -49,13 +95,27 @@ const ProfilePage = () => {
                     </Box>
 
                     <Box width="45%" maxHeight="600px" overflowY="auto">
-                        <Heading as="h2" fontSize="2xl" mb={4}>Saved Questions</Heading>
+                        <Heading as="h2" fontSize="2xl" mb={4}>
+                            Saved Questions
+                        </Heading>
                         {savedQuestions.map((question) => (
-                            <Box key={question.id} borderWidth="1px" borderRadius="md" p={2} boxShadow="md" mb={4} height="100px">
-                                <Heading as="h3" fontSize="lg" mb={1} noOfLines={1}>{question.title}</Heading>
+                            <Box
+                                key={question.id}
+                                borderWidth="1px"
+                                borderRadius="md"
+                                p={2}
+                                boxShadow="md"
+                                mb={4}
+                                height="100px"
+                            >
+                                <Heading as="h3" fontSize="lg" mb={1} noOfLines={1}>
+                                    {question.title}
+                                </Heading>
                                 <Flex wrap="wrap">
                                     {question.tags.map((tag) => (
-                                        <Text key={tag} mr={2} fontSize="sm" color="gray.500">#{tag}</Text>
+                                        <Text key={tag} mr={2} fontSize="sm" color="gray.500">
+                                            #{tag}
+                                        </Text>
                                     ))}
                                 </Flex>
                             </Box>
