@@ -50,6 +50,9 @@ gem "react-rails"
 
 gem 'rack-cors'
 
+gem 'activeadmin'
+
+
 
 
 # Use Sass to process CSS

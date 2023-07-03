@@ -4,12 +4,10 @@ Rails.application.routes.draw do
   devise_for :users
   root 'home#index'
 
-  # Admin routes
-  
-  get '/admin/dashboard', to: 'admin#dashboard', as: "admin_dashboard"
-  post 'admin/ban/:id', to: 'admin#ban_user', as: 'admin_ban_user'
-  post 'admin/unban/:id', to: 'admin#unban_user', as: 'admin_unban_user'
-  
+  # ActiveAdmin routes
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+
 
   # API routes
   namespace :api do
