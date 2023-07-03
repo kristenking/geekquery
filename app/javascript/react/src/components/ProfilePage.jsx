@@ -1,29 +1,46 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Box, Flex, Image, Heading, Text, Input, Button } from '@chakra-ui/react';
 import axios from 'axios';
 import UserContext from './UserContext';
 
 const ProfilePage = () => {
     const user = useContext(UserContext);
-    const [profileImage, setProfileImage] = useState(user.avatar);
+    console.log('User context:', user);
+    const [profileImage, setProfileImage] = useState('');
+
+    useEffect(() => {
+        if (user) {
+            axios
+                .get(`http://localhost:3000/api/v1/users`)
+                .then((response) => {
+                    setProfileImage(response.data.profile_picture);
+                })
+                .catch((error) => console.error(error));
+        }
+    }, [user]);
+
 
     const handleImageUpload = async (event) => {
-        const selectedUploadFile = event.target.files[0];
-        const avatarUploadData = new FormData();
-        avatarUploadData.append('user[avatar]', selectedUploadFile);
+        if (user) {
+            const selectedUploadFile = event.target.files[0];
+            const avatarUploadData = new FormData();
+            avatarUploadData.append('user[profile_picture]', selectedUploadFile);
+            submitToApi(avatarUploadData);
+        }
+    };
 
-        try {
-            const response = await axios.put('http://localhost:3000/api/v1/users', avatarUploadData, {
+    const submitToApi = (avatarUploadData) => {
+        if (user) {
+            const csrfToken = document.querySelector("[name='csrf-token']").content;
+            axios.put(`http://localhost:3000/api/v1/users`, avatarUploadData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    'X-CSRF-Token': csrfToken,
                 },
-            });
-
-            if (response.status === 200) {
-                setProfileImage(response.data.avatar);
-            }
-        } catch (error) {
-            console.error(error);
+            })
+                .then((response) => {
+                    setProfileImage(response.data.profile_picture);
+                })
+                .catch((error) => console.error(error));
         }
     };
 
