@@ -18,7 +18,7 @@ Rails.application.routes.draw do
         post :toggle_like, on: :member
         resources :comments, only: [:index, :create, :destroy]
       end
-      resource :users, only: [:show]
+      resource :users, only: [:show, :update]
     end
   end
 

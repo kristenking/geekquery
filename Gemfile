@@ -48,6 +48,9 @@ gem 'activestorage-validator'
 
 gem "react-rails"
 
+gem 'rack-cors'
+
+
 
 # Use Sass to process CSS
 # gem "sassc-rails"

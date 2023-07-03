@@ -3,8 +3,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :lockable
          enum role: [:regular, :admin]
 
+         has_one_attached :profile_picture
+
   has_many :questions
-  has_one_attached :profile_picture
+  
 
   has_many :likes
 
