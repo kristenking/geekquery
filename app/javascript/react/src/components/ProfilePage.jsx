@@ -75,7 +75,7 @@ const ProfilePage = () => {
         <Box maxWidth="1200px" py={8}>
             <Flex>
                 <Box align="center">
-                    <Image src={profileImage} alt="profile pic" boxSize="200px" objectFit="cover" borderRadius="md" ml={3} />
+                    <Image src={profileImage} alt="profile pic" boxSize="200px" objectFit="cover" borderRadius="md" ml={3} mb={3} />
                     <Button as="label" bg="#FFC108" color="white" size="sm" htmlFor="avatar">
                         Upload Image
                         <input id="avatar" type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
