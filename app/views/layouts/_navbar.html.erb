@@ -1,8 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white ">
   <div class="container-fluid w-75" >
-    <%= link_to root_path, class:"navbar-brand" do %>
+    <%= link_to questions_path, class:"navbar-brand" do %>
        <%= image_tag 'logo.png' %>
     <% end %>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -21,17 +22,19 @@
         </button>
       <% end %>
     </div>
-  <div class="dropdown">
-          <a class="" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <% if current_user && current_user.profile_picture.attached? %>
-      <%= image_tag current_user.profile_picture, class: "img-thumbnail rounded-circle me-5", style: "width: 4rem;" %>
-    <% else %>
-      <%= image_tag "profile_pic.jpg", class: "img-thumbnail rounded-circle me-5", style: "width: 4rem" %>
-    <% end %>
-    </a>
-    <ul class="dropdown-menu" >
-      <li><%= button_to "Log out", destroy_user_session_path,  class: "dropdown-item", method: :delete %></li>
-    </ul>
+  
+    <div class="dropdown d-flex">
+      <a href="/" class="" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <% if current_user && current_user.profile_picture.attached? %>
+          <%= link_to image_tag(current_user.profile_picture, class: "img-thumbnail rounded-circle me-5", style: "width: 4rem;"), "/" %>
+        <% else %>
+          <%= link_to image_tag("profile_pic.jpg", class: "img-thumbnail rounded-circle me-5", style: "width: 4rem"), "/" %>
+        <% end %>
+      </a>
+      
+      <ul class="dropdown-menu" >
+        <li><%= button_to "Log out", destroy_user_session_path,  class: "dropdown-item", method: :delete %></li>
+      </ul>
     </div>
   </div>
 </nav>
