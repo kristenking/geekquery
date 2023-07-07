@@ -1,34 +1,34 @@
+<div class="container" style="max-width: 500px;">
+  <%= form_with(model: question, class: "question-form") do |form| %>
+    <% if question.errors.any? %>
+      <div class="alert alert-danger">
+        <h2><%= pluralize(question.errors.count, "error") %> prohibited this question from being saved:</h2>
+        <ul>
+          <% question.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
+    <div class="mb-3">
+      <%= form.label :title, class: "form-label" %>
+      <%= form.text_area :title, class: "form-control" %>
+    </div>
 
-<%= form_with(model: question) do |form| %>
-  <% if question.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(question.errors.count, "error") %> prohibited this question from being saved:</h2>
+    <div class="mb-3">
+      <%= form.label :tag, class: "form-label" %>
+      <%= form.text_field :tag, class: "form-control" %>
+    </div>
 
-      <ul>
-        <% question.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div class="mb-3">
+      <%= form.label :images, class: "form-label" %>
+      <%= form.file_field :images, multiple: true, class: "form-control" %>
+    </div>
+
+    <div>
+      <%= form.submit "Submit", class: "btn btn-warning text-white" %>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_area :title %>
-  </div>
 
-  <div>
-    <%= form.label :tag, style: "display: block" %>
-    <%= form.text_field :tag %>
-  </div>
-
-  <div>
-    <%= form.label :images, style: "display: block" %>
-    <%= form.file_field :images, multiple: true %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
